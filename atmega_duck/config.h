@@ -21,7 +21,7 @@
 // #define DEBUG_BAUD 115200
 
 /*! ===== Communication Settings ===== */
-// #define ENABLE_SERIAL
+#define ENABLE_SERIAL
 #define SERIAL_COM Serial1
 #define SERIAL_BAUD 9600
 

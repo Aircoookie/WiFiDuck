@@ -1,3 +1,11 @@
+## Aircoookie Fork of the excellent WiFiDuck project by Spacehuhn
+
+This fork is a proof of concept to show a device that unifies keystroke injection and keylogging capabilities!
+
+Work in progress - keylogging doesn't work in any shape or form yet!
+
+**THIS REPOSITORY IS NOT MAINTAINED** - feel free to take code as per the MIT license, but for issues/PRs please target upstream
+
 # WiFiDuck
 
 <p align="center">
