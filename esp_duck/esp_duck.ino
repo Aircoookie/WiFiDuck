@@ -13,6 +13,8 @@
 #include "settings.h"
 #include "cli.h"
 
+#include "kb_host.h"
+
 void setup() {
     debug_init();
 
@@ -42,12 +44,15 @@ void setup() {
     debugln("\\ <_. )");
     debugln(" `---'   hjw\n");
 
+    kb::setup();
+
     duckscript::run(settings::getAutorun());
 }
 
 void loop() {
     com::update();
     webserver::update();
+    kb::loop();
 
     debug_update();
 }

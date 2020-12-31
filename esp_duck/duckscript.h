@@ -18,4 +18,6 @@ namespace duckscript {
 
     bool isRunning();
     String currentScript();
+
+    void sendChar(char a);
 };

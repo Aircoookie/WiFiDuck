@@ -114,4 +114,13 @@ namespace duckscript {
         if (!running) return String();
         return String(f.name());
     }
+
+    //This is intended to send a character passed through from the keyboard (keylogger)
+    void sendChar(char a) {
+      char buf[10] = "STRING X";
+      buf[7] = a;
+      buf[8] = '\n';
+      buf[9] = '\0';
+      com::send(buf, 9);
+    }
 }
