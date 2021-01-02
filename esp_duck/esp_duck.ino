@@ -53,6 +53,7 @@ void loop() {
     com::update();
     webserver::update();
     kb::loop();
+    spiffs::commitLog();
 
     debug_update();
 }

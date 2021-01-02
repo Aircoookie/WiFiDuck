@@ -9,6 +9,13 @@
 #endif
 #include <SPI.h>
 
+//USB HID keyboard codes from https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
+#define KEY_ENTER 0x28 // Keyboard Return (ENTER)
+#define KEY_ESC 0x29 // Keyboard ESCAPE
+#define KEY_BACKSPACE 0x2a // Keyboard DELETE (Backspace)
+#define KEY_TAB 0x2b // Keyboard Tab
+#define KEY_SPACE 0x2c // Keyboard Spacebar
+
 class KbdRptParser : public KeyboardReportParser
 {
     void PrintKey(uint8_t mod, uint8_t key);
@@ -47,12 +54,20 @@ void KbdRptParser::OnKeyDown(uint8_t mod, uint8_t key)
   PrintKey(mod, key);
   uint8_t c = OemToAscii(mod, key);
 
-  if (key == 44) digitalWrite(LED_BUILTIN, LOW);
+  //light up blue LED if spacebar is pressed (simple test if KB and host shield works correctly)
+  if (key == KEY_SPACE) digitalWrite(LED_BUILTIN, LOW);
 
   if (c)
     OnKeyPressed(c);
   else {
-    duckscript::sendKeycode(key);
+    //duckscript::sendKeycode(key);
+    switch (key) {
+      case KEY_ENTER:     duckscript::sendChar('\n'); spiffs::appendToLog('\n'); break;
+      case KEY_ESC:       spiffs::appendToLog("<ESC>"); break;
+      case KEY_TAB:       spiffs::appendToLog("<TAB>"); break;
+      case KEY_BACKSPACE: duckscript::sendChar((char)8); spiffs::appendToLog("<BCK>"); break;
+      default: break;
+    }
   }
 }
 
@@ -96,7 +111,7 @@ void KbdRptParser::OnKeyUp(uint8_t mod, uint8_t key)
 {
   //Serial.print("UP ");
   //PrintKey(mod, key);
-  if (key == 44) digitalWrite(LED_BUILTIN, HIGH);
+  if (key == KEY_SPACE) digitalWrite(LED_BUILTIN, HIGH);
 }
 
 void KbdRptParser::OnKeyPressed(uint8_t key)
@@ -104,6 +119,7 @@ void KbdRptParser::OnKeyPressed(uint8_t key)
   //Serial.print("ASCII: ");
   //Serial.println((char)key);
   duckscript::sendChar((char)key);
+  spiffs::appendToLog((char)key);
 };
 
 USB     Usb;

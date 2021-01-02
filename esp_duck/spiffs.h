@@ -36,4 +36,11 @@ namespace spiffs {
     void streamClose();
     bool streaming();
     size_t streamAvailable();
+
+    bool openLog();
+
+    void appendToLog(char a);
+    void appendToLog(String txt);
+
+    void commitLog();
 }

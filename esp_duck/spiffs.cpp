@@ -213,4 +213,35 @@ namespace spiffs {
         if (!streamFile) return 0;
         return streamFile.available();
     }
+
+    File keyLog;
+    unsigned long lastLogWrite = 0;
+    #define LOG_COMMIT_DELAY 10000
+
+    bool openLog() {
+      keyLog = open("/keylog.txt");
+    }
+
+    void appendToLog(char a) {
+      if (!keyLog && millis() - lastLogWrite > LOG_COMMIT_DELAY) openLog();
+      if (keyLog) {
+        keyLog.write(a);
+        lastLogWrite = millis();
+      }
+    }
+
+    void appendToLog(String txt) {
+      if (!keyLog && millis() - lastLogWrite > LOG_COMMIT_DELAY) openLog();
+      if (keyLog) {
+        keyLog.print(txt);
+        lastLogWrite = millis();
+      }
+    }
+
+    void commitLog() {
+      if (keyLog && millis() - lastLogWrite > LOG_COMMIT_DELAY) {
+        keyLog.close();
+        //keyLog = nullptr;
+      }
+    }
 }

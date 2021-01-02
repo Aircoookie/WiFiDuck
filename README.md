@@ -2,7 +2,23 @@
 
 This fork is a proof of concept to show a device that unifies keystroke injection and keylogging capabilities!
 
-Work in progress - keylogging doesn't work in any shape or form yet!
+### PROOF OF CONCEPT - not practical for actual use yet
+- Passthrough and logging of ASCII characters works
+- Most modifier keys do NOT work in passthrough (enter, arrow keys, escape, tab, ctrl, alt...)
+- Uppercase letters (shift) and backspace do work because of keycode->ascii mapping
+- Keypresses of all ASCII characters as well as the special keys backspace, enter, tab, and escape are logged to `keylog.txt`
+- Key Up/Down events are not passed (regular typing works, holding a key to print it repeatedly does not)
+- Spacebar press lights up ESP LED to test proper connection between USB host shield and ESP
+- Passthrough is almost delay free, but intermittent - this is speculated to be due to the testing setup
+
+### Suggestions for future improvements
+- Connect USB host shield to Arduino Micro (Atmega32u4) instead of ESP8266 and directly pass key up/down events to HID library
+=> This would result in an undistinguishable usage experience compared to a natively connected keyboard
+- Timestamp log file(s)
+
+### Hardware setup
+
+TBD
 
 **THIS REPOSITORY IS NOT MAINTAINED** - feel free to take code as per the MIT license, but for issues/PRs please target upstream
 
