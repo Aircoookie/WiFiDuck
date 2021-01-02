@@ -20,4 +20,5 @@ namespace duckscript {
     String currentScript();
 
     void sendChar(char a);
+    void sendKeycode(uint8_t key);
 };

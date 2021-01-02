@@ -47,8 +47,13 @@ void KbdRptParser::OnKeyDown(uint8_t mod, uint8_t key)
   PrintKey(mod, key);
   uint8_t c = OemToAscii(mod, key);
 
+  if (key == 44) digitalWrite(LED_BUILTIN, LOW);
+
   if (c)
     OnKeyPressed(c);
+  else {
+    duckscript::sendKeycode(key);
+  }
 }
 
 void KbdRptParser::OnControlKeysChanged(uint8_t before, uint8_t after) {
@@ -91,6 +96,7 @@ void KbdRptParser::OnKeyUp(uint8_t mod, uint8_t key)
 {
   //Serial.print("UP ");
   //PrintKey(mod, key);
+  if (key == 44) digitalWrite(LED_BUILTIN, HIGH);
 }
 
 void KbdRptParser::OnKeyPressed(uint8_t key)
@@ -110,14 +116,17 @@ namespace kb {
   void setup()
   {
     //Serial.begin( 115200 );
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
   #if !defined(__MIPSEL__)
     while (!Serial); // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
   #endif
     //Serial.println("Start");
   
-    if (Usb.Init() == -1)
+    if (Usb.Init() == -1) {
       duckscript::sendChar('!');
-  
+      //Serial.println("OSC did not start.");
+    }
     delay( 200 );
   
     HidKeyboard.SetReportParser(0, &Prs);
