@@ -14,9 +14,12 @@ This fork is a proof of concept to show a device that unifies keystroke injectio
 ### Suggestions for future improvements
 - Connect USB host shield to Arduino Micro (Atmega32u4) instead of ESP8266 and directly pass key up/down events to HID library
 => This would result in an undistinguishable usage experience compared to a natively connected keyboard
+(but would be more difficult to implement due to needing non-duckyscript communication from 32U4 to ESP)
 - Timestamp log file(s)
 
 ### Hardware setup
+- In addition to ESP8266 and Atmega32u4 board, a USB host shield (MAX3421E chip) is required to be connected to the ESP8266 via SPI
+https://www.hackster.io/139994/plug-any-usb-device-on-an-esp8266-e0ca8a
 
 TBD
 
